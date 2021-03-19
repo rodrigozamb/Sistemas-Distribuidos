@@ -3,14 +3,12 @@
 import threading
 import time
 
-exitFlag = 0
-
 ActiveThread = 0
 TotalThreads = 30
 globalstring = "Hello Word"
 
 strings = [
-    "I have brought peace, freedom, justice, and security to my new empire. Your new empire? Don´t make me kill you. Anakin my allegiance is to the Republic, to Democracy! If you are not with me then you are my enemy. Only a siith deals in absolutes. I´ll do what i must. You will try",
+    "I have brought peace, freedom, justice, and security to my new empire. Your new empire? Don´t make me kill you.",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque quis libero eget nisi condimentum dictum."
 ]
 
@@ -40,13 +38,13 @@ class myThread (threading.Thread):
             if ActiveThread == self.threadID:
                 # Se é a vez dessa thread fazer a tarefa, ela executará
                 for i in range(0,len(globalstring)):
-                    if globalstring[i].isupper():
+                    if globalstring[i].islower():
                         if i != 0 and i != (len(globalstring)-1):
-                            globalstring = globalstring[0:i:]+globalstring[i].lower()+globalstring[i+1::]
+                            globalstring = globalstring[0:i:]+globalstring[i].upper()+globalstring[i+1::]
                         elif i == 0:
-                            globalstring = globalstring[0].lower()+globalstring[1::]
+                            globalstring = globalstring[0].upper()+globalstring[1::]
                         else:
-                            globalstring = globalstring[:len(globalstring)-1:]+globalstring[i].lower()
+                            globalstring = globalstring[:len(globalstring)-1:]+globalstring[i].upper()
                         print("thread "+str(self.threadID)+" modificou : ")
                         print(globalstring)
                         print()
@@ -58,7 +56,7 @@ class myThread (threading.Thread):
     def checkCompleteTask(self):
         global globalstring
         for i in globalstring:
-            if i.isupper():
+            if i.islower():
                 return False
         return True
 
@@ -94,7 +92,7 @@ thread27 = myThread(27, "Thread-27", 27)
 thread28 = myThread(28, "Thread-28", 28)
 thread29 = myThread(29, "Thread-29", 29)
 
-globalstring = strings[1].upper()
+globalstring = strings[0]
 
 # Start new Threads
 
